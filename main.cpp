@@ -53,20 +53,20 @@ unsigned int findMultiply(unsigned int *_val, LogArray* _result){
     if(val == _result->data[_result->index] || (_result->data[_result->index]>10)){
         res=-1;//如果分解結果最後一碼和自己相同或是大於10則找不出最小整數乘法
     }else{
-        for(i=_result->index; i>0; i--){
+        for(i=_result->index; i>0; i--){//從最大的質因數值往回找，用multi記錄連續資料乘法結果是否超過10
             if((multi*_result->data[i]*_result->data[i-1]) < 10){
-                multi*=_result->data[i];
+                multi*=_result->data[i];//沒超過就做乘法
             }else{
                 #if DEBUG
                 printf("%d",multi*_result->data[i]);
                 #endif
                 e10 = getE10(index++);
-                res += multi * _result->data[i] * e10;
+                res += multi * _result->data[i] * e10;//超過就將值存進計算結果
                 multi=1;
             }
         }
         e10 = getE10(index++);
-        res += multi*_result->data[i] * e10;
+        res += multi*_result->data[i] * e10;//處理最後一筆資料
         #if DEBUG
         printf("%d\r\n",multi*_result->data[i]);
         #endif
